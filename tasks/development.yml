@@ -8,6 +8,10 @@
       - java-17-openjdk
       - java-latest-openjdk
       - maven
+      - gcc
+      - glibc-devel
+      - zlib-devel
+      - libstdc++-static
   tasks:
     - name: Install basic packages for development
       dnf:
