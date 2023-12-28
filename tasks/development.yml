@@ -1,0 +1,16 @@
+- hosts: localhost
+  become: true
+  vars:
+    pkgs:
+      - "@development tools"
+      - java-1.8.0-openjdk
+      - java-11-openjdk
+      - java-17-openjdk
+      - java-latest-openjdk
+      - maven
+  tasks:
+    - name: Install basic packages for development
+      dnf:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ pkgs }}"
