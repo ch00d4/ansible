@@ -1,0 +1,13 @@
+- hosts: localhost
+  tasks:
+    - name: Change shell to zsh
+      become: true
+      user:
+        name: wgonzalez
+        shell: /bin/zsh
+    - name: Install oh my zsh
+      shell:
+        cmd: rm -r $HOME/.oh-my-zsh && sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    - name: Import gpg keys
+      shell:
+        cmd: gpg --import $HOME/.keys/wgonzalez.asc
