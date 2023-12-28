@@ -6,6 +6,7 @@
       - zsh
       - curl
       - git
+      - dnf-plugins-core
   tasks:
     - name: Install basic packages
       dnf:
