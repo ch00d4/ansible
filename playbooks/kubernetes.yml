@@ -1,12 +1,7 @@
 - hosts: localhost
-  become: true
+  gather_facts: false
+  vars_files:
+    - ../vars/vars.yml
   tasks:
-    - name: KUBERNETES - Download kubectl
-      command:
-        cmd: curl -LO "https://dl.k8s.io/release/v1.29.0/bin/linux/amd64/kubectl"
-    - name: KUBERNETES - Install kubectl
-      command:
-        cmd: install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-    - name: KUBERNETES - Remove files
-      command:
-        cmd: rm kubectl
+    - include_tasks: ../tasks/kubernetes.yml
+      name: KUBERNETES

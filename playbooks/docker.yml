@@ -1,48 +1,7 @@
 - hosts: localhost
-  become: true
-  vars:
-    pkgs:
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
-      - docker-buildx-plugin
-      - docker-compose-plugin
-    pkgs_remove:
-      - docker
-      - docker-client
-      - docker-client-latest
-      - docker-common
-      - docker-latest
-      - docker-latest-logrotate
-      - docker-logrotate
-      - docker-selinux
-      - docker-engine-selinux
-      - docker-engine
+  gather_facts: false
+  vars_files:
+    - ../vars/vars.yml
   tasks:
-    - name: DOCKER - Uninstall old versions
-      dnf:
-        name: "{{ item }}"
-        state: absent
-      loop: "{{ pkgs_remove }}"
-    - name: DOCKER - Add Repository
-      command:
-        cmd: dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
-    - name: DOCKER - Install latest version
-      dnf:
-        name: "{{ item }}"
-        state: present
-      loop: "{{ pkgs }}"
-    - name: DOCKER - Start service
-      systemd_service:
-        name: docker
-        enabled: true
-        state: started
-    - name: DOCKER - Create docker group
-      group:
-        name: docker
-        state: present
-    - name: DOCKER - Add user to docker group
-      user:
-        name: wgonzalez
-        groups: docker
-        append: true
+    - include_tasks: ../tasks/docker.yml
+      name: DOCKER

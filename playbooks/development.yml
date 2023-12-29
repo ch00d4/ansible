@@ -1,20 +1,7 @@
 - hosts: localhost
-  become: true
-  vars:
-    pkgs:
-      - "@development tools"
-      - java-1.8.0-openjdk
-      - java-11-openjdk
-      - java-17-openjdk
-      - java-latest-openjdk
-      - maven
-      - gcc
-      - glibc-devel
-      - zlib-devel
-      - libstdc++-static
+  gather_facts: false
+  vars_files:
+    - ../vars/vars.yml
   tasks:
-    - name: Install basic packages for development
-      dnf:
-        name: "{{ item }}"
-        state: present
-      loop: "{{ pkgs }}"
+    - include_tasks: ../tasks/development.yml
+      name: DEVELOPMENT

@@ -1,15 +1,7 @@
 - hosts: localhost
-  become: true
-  vars:
-    pkgs:
-      - neovim
-      - zsh
-      - curl
-      - git
-      - dnf-plugins-core
+  gather_facts: false
+  vars_files:
+    - ../vars/vars.yml
   tasks:
-    - name: Install basic packages
-      dnf:
-        name: "{{ item }}"
-        state: present
-      loop: "{{ pkgs }}"
+    - include_tasks: ../tasks/basic.yml
+      name: BASIC
