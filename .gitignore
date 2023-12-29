@@ -1,1 +1,6 @@
-.env
+# AWS
+awscliv2.zip
+aws/
+
+# KUBERNETES
+kubectl

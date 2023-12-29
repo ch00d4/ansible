@@ -1,15 +1,21 @@
-- hosts: localhost
-  become: true
-  tasks:
-    - name: AWS - Download awscli
-      command:
-        cmd: curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-    - name: AWS - Extract files
-      command:
-        cmd: unzip awscliv2.zip
-    - name: AWS - Install aws
-      command:
-        cmd: ./aws/install
-    - name: AWS - Remove files
-      command:
-        cmd: rm -r ./aws awscliv2.zip
+- name: AWS - Comprobe existing awscli
+  stat:
+    path: /usr/local/bin/aws
+  register: aws_installed
+- name: AWS - Download awscli
+  command:
+    cmd: curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+- name: AWS - Extract files
+  command:
+    cmd: unzip -o awscliv2.zip
+- name: AWS - Install aws
+  command:
+    cmd: ./aws/install
+  when: not aws_installed.stat.exists
+- name: AWS - Updated aws
+  command:
+    cmd: ./aws/install --update
+  when: aws_installed.stat.exists
+- name: AWS - Remove files
+  command:
+    cmd: rm -r ./aws awscliv2.zip

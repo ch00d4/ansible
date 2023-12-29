@@ -1,0 +1,20 @@
+- hosts: localhost
+  name: Setup Workstation
+  gather_facts: false
+
+  vars_files:
+    - vars/vars.yml
+
+  tasks:
+    - include_tasks: tasks/basic.yml
+      name: BASIC
+    - include_tasks: tasks/development.yml
+      name: DEVELOPMENT
+    - include_tasks: tasks/aws.yml
+      name: AWS
+    - include_tasks: tasks/docker.yml
+      name: DOCKER
+    - include_tasks: tasks/kubernetes.yml
+      name: KUBERNETES
+    - include_tasks: tasks/kubernetes.yml
+      name: USER

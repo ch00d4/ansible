@@ -1,0 +1,15 @@
+- hosts: localhost
+  become: true
+  vars:
+    pkgs:
+      - neovim
+      - zsh
+      - curl
+      - git
+      - dnf-plugins-core
+  tasks:
+    - name: Install basic packages
+      dnf:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ pkgs }}"

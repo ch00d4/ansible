@@ -1,20 +1,6 @@
-- hosts: localhost
+- name: Install basic packages for development
   become: true
-  vars:
-    pkgs:
-      - "@development tools"
-      - java-1.8.0-openjdk
-      - java-11-openjdk
-      - java-17-openjdk
-      - java-latest-openjdk
-      - maven
-      - gcc
-      - glibc-devel
-      - zlib-devel
-      - libstdc++-static
-  tasks:
-    - name: Install basic packages for development
-      dnf:
-        name: "{{ item }}"
-        state: present
-      loop: "{{ pkgs }}"
+  dnf:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ pkgs_development }}"
